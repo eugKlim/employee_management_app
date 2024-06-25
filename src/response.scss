@@ -1,0 +1,50 @@
+@media (max-width: 1000px) {
+  .container {
+    flex-wrap: wrap;
+  }
+  .sidebar {
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap-reverse;
+    margin-bottom: 50px;
+  }
+  .form {
+    margin-top: 0;
+    width: 40%;
+  }
+  .content {
+    width: 100%;
+  }
+  .employee-list__item {
+    max-width: 100%;
+    padding: 10px 5px;
+  }
+}
+
+@media (max-width: 920px) {
+  .sidebar {
+    justify-content: center;
+    .form {
+      margin-bottom: 40px;
+      width: 100%;
+    }
+  }
+  .widget {
+    min-width: 100%;
+    &-inner {
+      min-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 530px) {
+  .container {
+    padding: 0;
+  }
+  .form {
+    min-width: 100%;
+    padding: 8px 20px;
+  }
+}

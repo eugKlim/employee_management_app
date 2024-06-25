@@ -1,0 +1,39 @@
+.filter {
+  max-width: 400px;
+  background-color: rgb(255, 255, 255, 0.6);
+  margin: 0 auto 60px;
+  border-radius: 10px;
+  padding: 1px 10px;
+  text-align: center;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
+
+  & h2 {
+    color: #413f3f;
+  }
+  &-btns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  & button {
+    background-color: #fff;
+    padding: 5px 5px;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 15px;
+    min-height: 20px;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
+
+    &.active {
+      background-color: rgb(146, 113, 254);
+      color: #fff;
+    }
+    & img {
+      display: block;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto;
+    }
+  }
+}
