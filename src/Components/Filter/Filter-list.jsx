@@ -15,7 +15,7 @@ class FilterList extends Component {
     });
     return (
       <div className="filter">
-        <h2>Фильтрация</h2>
+        <h2>Фильтр</h2>
         <div className="filter-btns">{elements}</div>
       </div>
     );

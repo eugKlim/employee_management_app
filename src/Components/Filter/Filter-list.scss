@@ -28,6 +28,7 @@
     &.active {
       background-color: rgb(146, 113, 254);
       color: #fff;
+      cursor: no-drop;
     }
     & img {
       display: block;

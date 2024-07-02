@@ -1,3 +1,5 @@
+@import './vars.scss';
+
 body {
   font-family: sans-serif;
   background-color: #252424;
@@ -7,27 +9,42 @@ body {
 * {
   box-sizing: border-box;
 }
+::-webkit-scrollbar {
+  width: 10px;
+  margin-left: 210px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(0, 85, 255);
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(0, 179, 255);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: aqua;
+}
+
 .container {
-  max-width: 1200px;
-  padding: 20px;
+  max-width: 1280px;
+  padding: 0 20px;
   margin: 0 auto;
   background-color: #0f99b8;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 }
 .sidebar {
-  max-width: 50%;
+  max-width: 45%;
   background-color: rgba(169, 166, 166, 0.58);
   padding: 10px;
-  border-radius: 30px;
-  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 0 0 30px 30px;
+  box-shadow: $shadow;
 }
 .content {
-  width: 50%;
+  width: 55%;
   background-color: rgb(125, 125, 125, 0.8);
-  padding: 2px 10px;
-  border-radius: 30px;
-  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
+  padding: 0px 10px 0;
+  box-shadow: $shadow;
+  overflow: hidden;
 }
 
 button {
