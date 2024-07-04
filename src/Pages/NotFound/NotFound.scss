@@ -1,0 +1,16 @@
+.notFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background-color: rgb(77, 2, 2);
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #fff;
+  span {
+    font-size: 40px;
+    font-weight: bold;
+    color: #e75207;
+  }
+}

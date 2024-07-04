@@ -3,6 +3,8 @@ import axios from 'axios';
 import './Employee-list.scss';
 import EmploeeListItem from './Emploee-list-item';
 
+import { Link } from 'react-router-dom';
+
 const EmployeeList = ({ setCountUsers }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
@@ -10,19 +12,16 @@ const EmployeeList = ({ setCountUsers }) => {
   useEffect(() => {
     const getUsersFunc = async () => {
       try {
-        const countInfo = 11;
         const response = await axios.get(
           'https://jsonplaceholder.typicode.com/users'
         );
-        const getUsers = response.data.slice(0, countInfo);
-        setUsers(getUsers);
-        setCountUsers(getUsers.length);
+        setUsers(response.data);
+        setCountUsers(response.data.length);
 
         const userImagesResponse = await axios.get(
           'https://jsonplaceholder.typicode.com/photos'
         );
-        const getUsersImage = userImagesResponse.data.slice(0, countInfo);
-        setImage(getUsersImage);
+        setImage(userImagesResponse.data);
       } catch (error) {
         alert('Ошибка получения данных:', error);
       } finally {
@@ -43,6 +42,7 @@ const EmployeeList = ({ setCountUsers }) => {
             <EmploeeListItem
               name={item.name}
               image={images[index]?.thumbnailUrl}
+              id={index + 1}
               key={index}
             />
           ))}
@@ -53,3 +53,17 @@ const EmployeeList = ({ setCountUsers }) => {
 };
 
 export default EmployeeList;
+
+/*
+
+        <ul>
+          {users.map((item, index) => (
+            <EmploeeListItem
+                name={item.name}
+                image={images[index]?.thumbnailUrl}
+                id={index}
+                key={index}
+              />
+          ))}
+        </ul>
+*/

@@ -54,4 +54,10 @@
     min-width: 100%;
     padding: 8px 20px;
   }
+  .showMoreInfo {
+    &-inner {
+      max-width: 100%;
+      padding: 10px 20px;
+    }
+  }
 }
