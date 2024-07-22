@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import './Employee-list.scss';
 import EmploeeListItem from './Emploee-list-item';
 
-import { Link } from 'react-router-dom';
+import SearchContext from '../Search/Search-Context';
 
 const EmployeeList = ({ setCountUsers }) => {
+  const { searchPeople } = useContext(SearchContext);
+
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [images, setImage] = useState([]);
+
+  const [filtredUsers, setFilteredUsers] = useState([]);
+
   useEffect(() => {
     const getUsersFunc = async () => {
       try {
@@ -32,13 +37,21 @@ const EmployeeList = ({ setCountUsers }) => {
     getUsersFunc();
   }, []);
 
+  useEffect(() => {
+    setFilteredUsers(
+      users.filter((user) =>
+        user.name.toLowerCase().includes(searchPeople.toLowerCase())
+      )
+    );
+  }, [searchPeople, users]);
+
   return (
     <div className="employee-list">
       {isLoading ? (
         <img src="Icons/gif/loading.gif" alt="Loading..." className="loading" />
       ) : (
         <ul>
-          {users.map((item, index) => (
+          {filtredUsers.map((item, index) => (
             <EmploeeListItem
               name={item.name}
               image={images[index]?.thumbnailUrl}
@@ -53,17 +66,3 @@ const EmployeeList = ({ setCountUsers }) => {
 };
 
 export default EmployeeList;
-
-/*
-
-        <ul>
-          {users.map((item, index) => (
-            <EmploeeListItem
-                name={item.name}
-                image={images[index]?.thumbnailUrl}
-                id={index}
-                key={index}
-              />
-          ))}
-        </ul>
-*/
