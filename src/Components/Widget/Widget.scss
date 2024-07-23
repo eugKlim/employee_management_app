@@ -1,7 +1,8 @@
 @import '../../scss/vars.scss';
 .widget {
-  min-width: 400px;
-
+  // min-width: 400px;
+  display: flex;
+  justify-content: center;
   &-inner {
     box-shadow: $shadow;
     background-color: #fff;
@@ -9,6 +10,7 @@
     display: inline-block;
     overflow: hidden;
     border: 5px solid #fff;
+    min-width: 100%;
   }
   &-item {
     font-weight: bold;

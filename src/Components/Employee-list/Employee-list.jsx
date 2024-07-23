@@ -44,7 +44,6 @@ const EmployeeList = ({ setCountUsers }) => {
       )
     );
   }, [searchPeople, users]);
-
   return (
     <div className="employee-list">
       {isLoading ? (
