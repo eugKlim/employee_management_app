@@ -1,6 +1,18 @@
 import { Link } from 'react-router-dom';
+import { StatusContext } from '../Status-Panel/StatusContext';
+import { useContext, useState } from 'react';
+import StatusPanel from '../Status-Panel/Status-Panel';
 
 const EmploeeListItem = ({ name, image, id }) => {
+  const [isStatusPaneOpen, setIsStatusPaneOpen] = useState(false);
+  const openPanel = () => {
+    setIsStatusPaneOpen(true);
+  };
+  const closePanel = () => {
+    setIsStatusPaneOpen(false);
+  };
+
+  const { userStatuses } = useContext(StatusContext);
   return (
     <>
       <li className="employee-list__item">
@@ -15,22 +27,29 @@ const EmploeeListItem = ({ name, image, id }) => {
                 <Link to={`/user/${id}`}>
                   <button className="employee-list__item-info__btn">
                     Вся информация
-                  </button>{' '}
+                  </button>
                 </Link>
               </div>
             </div>
           </div>
-          <button className="employee-list__actions">
+          <button
+            className="employee-list__actions"
+            onClick={() => openPanel()}
+          >
             <span>...</span>
           </button>
         </div>
         <div className="employee-status">
           <h2>Статус сотрудника:</h2>
           <div className="employee-status__icons">
-            <img src="Icons/promotion.svg" alt="" />
-            <img src="Icons/hospital.svg" alt="" />
-            <img src="Icons/increase.svg" alt="" />
+            {userStatuses[id]?.map((icon, index) => (
+              <img key={index} src={icon} alt="user status" />
+            ))}
           </div>
+
+          {isStatusPaneOpen ? (
+            <StatusPanel name={name} id={id} closePanel={closePanel} />
+          ) : null}
         </div>
       </li>
     </>

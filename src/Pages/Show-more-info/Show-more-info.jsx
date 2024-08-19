@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import './Show-more-info.scss';
+
+import { StatusContext } from '@/Components/Status-Panel/StatusContext';
+import StatusPanel from '@/Components/Status-Panel/Status-Panel';
 
 const ShowMoreInfo = () => {
   const { id } = useParams();
@@ -10,6 +13,8 @@ const ShowMoreInfo = () => {
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+
+  const { userStatuses } = useContext(StatusContext);
 
   useEffect(() => {
     const getUsersFunc = async () => {
@@ -36,6 +41,14 @@ const ShowMoreInfo = () => {
 
     getUsersFunc();
   }, [id, navigate]);
+
+  const [isStatusPaneOpen, setIsStatusPaneOpen] = useState(false);
+  const openPanel = () => {
+    setIsStatusPaneOpen(true);
+  };
+  const closePanel = () => {
+    setIsStatusPaneOpen(false);
+  };
 
   return (
     <div>
@@ -71,14 +84,20 @@ const ShowMoreInfo = () => {
               <div className="employee-status">
                 <h2>Статус сотрудника:</h2>
                 <div className="employee-status__icons">
-                  <img src="../Icons/promotion.svg" alt="" />
-                  <img src="../Icons/hospital.svg" alt="" />
-                  <img src="../Icons/increase.svg" alt="" />
+                  {userStatuses[id]?.map((icon, index) => (
+                    <img key={index} src={icon} alt="user status" />
+                  ))}
                 </div>
               </div>
-              <button className="showMoreInfo-status__btn">
+              <button
+                className="showMoreInfo-status__btn"
+                onClick={() => openPanel()}
+              >
                 Редактировать статус ⚙
               </button>
+              {isStatusPaneOpen ? (
+                <StatusPanel name={user.name} id={id} closePanel={closePanel} />
+              ) : null}
             </div>
             <Link to={`/home`}>
               <button className="goToHome">На главную</button>

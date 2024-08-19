@@ -2,16 +2,13 @@ import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import './Employee-list.scss';
 import EmploeeListItem from './Emploee-list-item';
-
-import SearchContext from '../Search/Search-Context';
+import { SearchContext } from '../Search/Search-Context';
 
 const EmployeeList = ({ setCountUsers }) => {
   const { searchPeople } = useContext(SearchContext);
-
   const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [images, setImage] = useState([]);
-
   const [filtredUsers, setFilteredUsers] = useState([]);
 
   useEffect(() => {
@@ -44,6 +41,7 @@ const EmployeeList = ({ setCountUsers }) => {
       )
     );
   }, [searchPeople, users]);
+
   return (
     <div className="employee-list">
       {isLoading ? (

@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import './Search.scss';
-
-import SearchContext from './Search-Context';
+import { SearchContext } from './Search-Context';
 
 const Search = () => {
   const { searchChange } = useContext(SearchContext);

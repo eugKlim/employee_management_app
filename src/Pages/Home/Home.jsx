@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import Widget from '../../Components/Widget/Widget-list';
-import EmployeeList from '../../Components/Employee-list/Employee-list';
-import Filter from '../../Components/Filter/Filter-list';
-import Search from '../../Components/Search/Search';
-
-import SearchProvider from '../../Components/Search/Search-Provider';
+import Widget from '@/Components/Widget/Widget-list';
+import EmployeeList from '@/Components/Employee-list/Employee-list';
+import Filter from '@/Components/Filter/Filter-list';
+import Search from '@/Components/Search/Search';
 
 const Home = () => {
   const [countUsers, setCountUsers] = useState(0);
@@ -64,23 +62,22 @@ const Home = () => {
       active: '',
     },
   ];
+
   // / data
   dataWidget.sort((a, b) => a.name.length - b.name.length);
   return (
     <div className="container">
-      <SearchProvider>
-        <aside className="sidebar">
-          <div className="sidebar-inner">
-            <Search />
+      <aside className="sidebar">
+        <div className="sidebar-inner">
+          <Search />
 
-            <Filter dataFilterBtn={dataFilterBtn} />
-            <Widget dataWidget={dataWidget} />
-          </div>
-        </aside>
-        <section className="content">
-          <EmployeeList setCountUsers={setCountUsers} />
-        </section>
-      </SearchProvider>
+          <Filter dataFilterBtn={dataFilterBtn} />
+          <Widget dataWidget={dataWidget} />
+        </div>
+      </aside>
+      <section className="content">
+        <EmployeeList setCountUsers={setCountUsers} />
+      </section>
     </div>
   );
 };

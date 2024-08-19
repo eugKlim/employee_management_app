@@ -1,4 +1,4 @@
-import { Component, act } from 'react';
+import { Component } from 'react';
 
 class FilterItem extends Component {
   constructor(props) {

@@ -1,5 +1,16 @@
-import { createContext } from 'react';
+import { useState, createContext } from 'react';
 
-const SearchContext = createContext();
+export const SearchContext = createContext();
 
-export default SearchContext;
+export const SearchProvider = ({ children }) => {
+  const [searchPeople, setSearchPeople] = useState('');
+
+  const searchChange = (e) => {
+    setSearchPeople(e.target.value);
+  };
+  return (
+    <SearchContext.Provider value={{ searchChange, searchPeople }}>
+      {children}
+    </SearchContext.Provider>
+  );
+};
