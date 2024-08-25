@@ -1,18 +1,15 @@
 import { Link } from 'react-router-dom';
 import { StatusContext } from '../Status-Panel/StatusContext';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import StatusPanel from '../Status-Panel/Status-Panel';
 
-const EmploeeListItem = ({ name, image, id }) => {
-  const [isStatusPaneOpen, setIsStatusPaneOpen] = useState(false);
-  const openPanel = () => {
-    setIsStatusPaneOpen(true);
-  };
-  const closePanel = () => {
-    setIsStatusPaneOpen(false);
-  };
+import usePanelStatus from '../../hooks/usePanelStatus';
 
+const EmploeeListItem = ({ name, image, id }) => {
   const { userStatuses } = useContext(StatusContext);
+
+  const { isStatusPaneOpen, openPanel, closePanel } = usePanelStatus();
+
   return (
     <>
       <li className="employee-list__item">

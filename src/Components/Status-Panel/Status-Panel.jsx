@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './Status-Panel.scss';
 import { StatusContext } from '../Status-Panel/StatusContext';
 
@@ -7,22 +7,66 @@ import promotionImg from '/Icons/promotion.svg';
 import increaseImg from '/Icons/increase.svg';
 import vacationImg from '/Icons/vacation.svg';
 
-
 const StatusPanel = ({ name, closePanel, id }) => {
   const { toggleUserStatus, userStatuses } = useContext(StatusContext);
 
-  // const iconList = [
-  //   { src: 'Icons/promotion.svg', alt: 'ИДЁТ НА ПОВЫШЕНИЕ' },
-  //   { src: 'Icons/hospital.svg', alt: 'НА БОЛЬНИЧНОМ' },
-  //   { src: 'Icons/increase.svg', alt: 'ПРЕМИЮ ПОЛУЧИТ' },
-  //   { src: 'Icons/vacation.svg', alt: 'В ОТПУСКЕ' },
-  // ];
+  const [orPromotion, setOrPromotion] = useState('');
+  const [orIncrease, setOrIncrease] = useState('');
+  const [orHospital, setOrHospital] = useState('');
+  const [orVacation, setOrVacation] = useState('');
+
+  function getCountStatus(name, setstate, id) {
+    const [searchState, setSearchState] = useState(0);
+
+    useEffect(() => {
+      if (Object.keys(userStatuses).length !== 0) {
+        if (userStatuses[id]) {
+          setSearchState(
+            userStatuses[id].filter(
+              (item) => item === `/employee_management_app/Icons/${name}.svg`
+            ).length
+          );
+        }
+      }
+      localStorage.setItem('userStatus', JSON.stringify(userStatuses));
+    }, [getCountStatus]);
+
+    useEffect(() => {
+      setstate(
+        searchState !== 0 ? (
+          <div className="status-panel__status delete">Удалить</div>
+        ) : (
+          <div className="status-panel__status has">Добавить</div>
+        )
+      );
+    }, [searchState]);
+  }
 
   const iconList = [
-    { src: promotionImg, alt: 'ИДЁТ НА ПОВЫШЕНИЕ' },
-    { src: hospitalImg, alt: 'НА БОЛЬНИЧНОМ' },
-    { src: increaseImg, alt: 'ПРЕМИЮ ПОЛУЧИТ' },
-    { src: vacationImg, alt: 'В ОТПУСКЕ' },
+    {
+      src: promotionImg,
+      alt: 'ИДЁТ НА ПОВЫШЕНИЕ',
+      btnState: orPromotion,
+      callFunc: getCountStatus('promotion', setOrPromotion, id),
+    },
+    {
+      src: hospitalImg,
+      alt: 'НА БОЛЬНИЧНОМ',
+      btnState: orHospital,
+      callFunc: getCountStatus('hospital', setOrHospital, id),
+    },
+    {
+      src: increaseImg,
+      alt: 'ПРЕМИЮ ПОЛУЧИТ',
+      btnState: orIncrease,
+      callFunc: getCountStatus('increase', setOrIncrease, id),
+    },
+    {
+      src: vacationImg,
+      alt: 'В ОТПУСКЕ',
+      btnState: orVacation,
+      callFunc: getCountStatus('vacation', setOrVacation, id),
+    },
   ];
 
   const ref = useRef();
@@ -58,7 +102,7 @@ const StatusPanel = ({ name, closePanel, id }) => {
               <img src={item.src} alt={item.alt} />
               <h2>{item.alt}</h2>
             </button>
-            <div className="status-panel__status has">Добавлено</div>
+            {item.btnState}
           </div>
         ))}
       </div>

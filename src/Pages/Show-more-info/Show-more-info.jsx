@@ -7,14 +7,15 @@ import './Show-more-info.scss';
 import { StatusContext } from '@/Components/Status-Panel/StatusContext';
 import StatusPanel from '@/Components/Status-Panel/Status-Panel';
 
+import usePanelStatus from '../../hooks/usePanelStatus';
 const ShowMoreInfo = () => {
   const { id } = useParams();
   const [user, setUsers] = useState(null);
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-
   const { userStatuses } = useContext(StatusContext);
+  const { isStatusPaneOpen, openPanel, closePanel } = usePanelStatus();
 
   useEffect(() => {
     const getUsersFunc = async () => {
@@ -41,14 +42,6 @@ const ShowMoreInfo = () => {
 
     getUsersFunc();
   }, [id, navigate]);
-
-  const [isStatusPaneOpen, setIsStatusPaneOpen] = useState(false);
-  const openPanel = () => {
-    setIsStatusPaneOpen(true);
-  };
-  const closePanel = () => {
-    setIsStatusPaneOpen(false);
-  };
 
   return (
     <div>

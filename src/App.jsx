@@ -5,11 +5,19 @@ import {
   Navigate,
 } from 'react-router-dom';
 
+import { useContext, useEffect } from 'react';
+import { StatusContext } from './Components/Status-Panel/StatusContext';
+
 import Home from './Pages/Home/Home';
 import ShowMoreInfo from './Pages/Show-more-info/Show-more-info';
 import NotFound from './Pages/NotFound/NotFound';
 
 const App = () => {
+  const { userStatusFromLocalStorgae } = useContext(StatusContext);
+  useEffect(() => {
+    userStatusFromLocalStorgae();
+  }, []);
+
   return (
     <Router basename={import.meta.env.BASE_URL}>
       <Routes>

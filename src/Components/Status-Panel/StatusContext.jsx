@@ -5,6 +5,10 @@ export const StatusContext = createContext();
 export const StatusProvider = ({ children }) => {
   const [userStatuses, setUserStatuses] = useState({});
 
+  const userStatusFromLocalStorgae = () => {
+    setUserStatuses(JSON.parse(localStorage.getItem('userStatus')));
+  };
+
   const toggleUserStatus = (userId, icon) => {
     setUserStatuses((prevStatuses) => {
       const userIcons = prevStatuses[userId] || [];
@@ -19,10 +23,10 @@ export const StatusProvider = ({ children }) => {
     });
   };
 
-  localStorage.setItem('userStatus', JSON.stringify(userStatuses));
-
   return (
-    <StatusContext.Provider value={{ toggleUserStatus, userStatuses }}>
+    <StatusContext.Provider
+      value={{ toggleUserStatus, userStatuses, userStatusFromLocalStorgae }}
+    >
       {children}
     </StatusContext.Provider>
   );
