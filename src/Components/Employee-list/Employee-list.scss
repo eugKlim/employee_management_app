@@ -2,6 +2,7 @@
 .employee-list {
   height: 100vh;
   overflow-y: auto;
+  padding-bottom: 20px;
   & ul {
     padding: 0;
     margin-right: 20px;
@@ -81,5 +82,16 @@
     &:hover {
       box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.75);
     }
+  }
+  &__empty {
+    color: #c0c0c0;
+  }
+  &__no-search {
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 60px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #fff;
   }
 }

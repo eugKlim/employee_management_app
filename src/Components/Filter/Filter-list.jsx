@@ -1,25 +1,38 @@
-import { Component } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './Filter-list.scss';
 import FilterItem from './Filter-item';
+import { SearchContext } from '../Search/Search-Context';
 
-class FilterList extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    const { dataFilterBtn } = this.props;
+const FilterList = ({ dataFilterBtn }) => {
+  const [activeBtnFilter, setActiveBtnFilter] = useState(0);
+  const { searchPeople } = useContext(SearchContext);
 
-    const elements = dataFilterBtn.map((item, index) => {
-      const { name, icon, active } = item;
-      return <FilterItem name={name} icon={icon} active={active} key={index} />;
-    });
-    return (
-      <div className="filter">
-        <h2>Фильтр</h2>
-        <div className="filter-btns">{elements}</div>
+  useEffect(() => {
+    setActiveBtnFilter(0);
+  }, [searchPeople]);
+
+  const giveFilterBtnActive = (index) => {
+    setActiveBtnFilter(index);
+  };
+
+  return (
+    <div className="filter">
+      <h2>Фильтр</h2>
+      <div className="filter-btns">
+        {dataFilterBtn.map((data, index) => (
+          <FilterItem
+            name={data.name}
+            icon={data.icon}
+            statuses={data.statuses}
+            key={index}
+            active={index === activeBtnFilter}
+            giveFilterBtnActive={giveFilterBtnActive}
+            index={index}
+          />
+        ))}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default FilterList;

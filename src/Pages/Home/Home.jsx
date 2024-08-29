@@ -55,38 +55,37 @@ const Home = () => {
     {
       name: 'Все',
       icon: 'Icons/people.svg',
-      active: 'active',
+      statuses: 'all-people',
     },
     {
       name: 'В отпуске',
       icon: 'Icons/vacation.svg',
-      active: '',
+      statuses: 'vacation',
     },
     {
       name: 'Идут на повышение',
       icon: 'Icons/promotion.svg',
-      active: '',
+      statuses: 'promotion',
     },
     {
       name: 'На больничном',
       icon: 'Icons/hospital.svg',
-      active: '',
+      statuses: 'hospital',
     },
     {
       name: 'Премию получат',
       icon: 'Icons/increase.svg',
-      active: '',
+      statuses: 'increase',
     },
   ];
-
   // / data
+
   dataWidget.sort((a, b) => a.name.length - b.name.length);
   return (
     <div className="container">
       <aside className="sidebar">
         <div className="sidebar-inner">
           <Search />
-
           <Filter dataFilterBtn={dataFilterBtn} />
           <Widget dataWidget={dataWidget} />
         </div>

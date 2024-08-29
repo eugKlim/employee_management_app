@@ -14,7 +14,7 @@
   height: 100vh;
   overflow-y: auto;
   &-inner {
-    background-color: #ffffff23;
+    background-color: #032d4f;
     padding: 10px 40px;
     border-radius: 20px;
     width: 500px;
@@ -50,6 +50,10 @@
       font-size: 11px;
       padding: 4px 10px;
       border-radius: 5px;
+    }
+    &__icons {
+      display: flex;
+      background-color: #fff;
     }
   }
 }

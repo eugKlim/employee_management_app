@@ -3,13 +3,13 @@ import axios from 'axios';
 import './Employee-list.scss';
 import EmploeeListItem from './Emploee-list-item';
 import { SearchContext } from '../Search/Search-Context';
+import { StatusContext } from '../Status-Panel/StatusContext';
 
 const EmployeeList = ({ setCountUsers }) => {
-  const { searchPeople } = useContext(SearchContext);
+  const { searchPeople, users, setUsers } = useContext(SearchContext);
+  const { filtredUsers, setFilteredUsers } = useContext(StatusContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [users, setUsers] = useState([]);
   const [images, setImage] = useState([]);
-  const [filtredUsers, setFilteredUsers] = useState([]);
 
   useEffect(() => {
     const getUsersFunc = async () => {
@@ -18,12 +18,14 @@ const EmployeeList = ({ setCountUsers }) => {
           'https://jsonplaceholder.typicode.com/users'
         );
         setUsers(response.data);
-        setCountUsers(response.data.length);
+        const getcountUsers = response.data.length;
+        setCountUsers(getcountUsers);
 
         const userImagesResponse = await axios.get(
           'https://jsonplaceholder.typicode.com/photos'
         );
-        setImage(userImagesResponse.data);
+        const getImage = userImagesResponse.data.splice(0, getcountUsers);
+        setImage(getImage);
       } catch (error) {
         alert('Ошибка получения данных:', error);
       } finally {
@@ -48,14 +50,18 @@ const EmployeeList = ({ setCountUsers }) => {
         <img src="Icons/gif/loading.gif" alt="Loading..." className="loading" />
       ) : (
         <ul>
-          {filtredUsers.map((item, index) => (
-            <EmploeeListItem
-              name={item.name}
-              image={images[index]?.thumbnailUrl}
-              id={index + 1}
-              key={index}
-            />
-          ))}
+          {filtredUsers.length ? (
+            filtredUsers.map((item) => (
+              <EmploeeListItem
+                name={item.name}
+                image={images[item.id - 1]?.thumbnailUrl}
+                id={item.id}
+                key={item.id}
+              />
+            ))
+          ) : (
+            <p className="employee-list__no-search">Ничего не найдено</p>
+          )}
         </ul>
       )}
     </div>

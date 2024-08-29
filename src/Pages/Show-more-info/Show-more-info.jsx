@@ -3,11 +3,10 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import './Show-more-info.scss';
-
 import { StatusContext } from '@/Components/Status-Panel/StatusContext';
 import StatusPanel from '@/Components/Status-Panel/Status-Panel';
-
 import usePanelStatus from '../../hooks/usePanelStatus';
+
 const ShowMoreInfo = () => {
   const { id } = useParams();
   const [user, setUsers] = useState(null);
@@ -73,13 +72,20 @@ const ShowMoreInfo = () => {
               <strong>Address:</strong> {user.address.street},{' '}
               {user.address.city}
             </p>
+            <p>
+              <strong>ZipCode:</strong> {user.address.zipcode}
+            </p>
             <div className="showMoreInfo-status">
               <div className="employee-status">
                 <h2>Статус сотрудника:</h2>
                 <div className="employee-status__icons">
-                  {userStatuses[id]?.map((icon, index) => (
-                    <img key={index} src={icon} alt="user status" />
-                  ))}
+                  {userStatuses[id]?.length ? (
+                    userStatuses[id]?.map((icon, index) => (
+                      <img key={index} src={icon} alt="user status" />
+                    ))
+                  ) : (
+                    <p className="employee-list__empty">Пусто</p>
+                  )}
                 </div>
               </div>
               <button

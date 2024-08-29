@@ -2,14 +2,11 @@ import { Link } from 'react-router-dom';
 import { StatusContext } from '../Status-Panel/StatusContext';
 import { useContext } from 'react';
 import StatusPanel from '../Status-Panel/Status-Panel';
-
 import usePanelStatus from '../../hooks/usePanelStatus';
 
 const EmploeeListItem = ({ name, image, id }) => {
   const { userStatuses } = useContext(StatusContext);
-
   const { isStatusPaneOpen, openPanel, closePanel } = usePanelStatus();
-
   return (
     <>
       <li className="employee-list__item">
@@ -39,9 +36,13 @@ const EmploeeListItem = ({ name, image, id }) => {
         <div className="employee-status">
           <h2>Статус сотрудника:</h2>
           <div className="employee-status__icons">
-            {userStatuses[id]?.map((icon, index) => (
-              <img key={index} src={icon} alt="user status" />
-            ))}
+            {userStatuses[id]?.length ? (
+              userStatuses[id]?.map((icon, index) => (
+                <img key={index} src={icon} alt="user status" />
+              ))
+            ) : (
+              <p className="employee-list__empty">Пусто</p>
+            )}
           </div>
 
           {isStatusPaneOpen ? (
