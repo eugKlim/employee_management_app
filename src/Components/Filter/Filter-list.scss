@@ -1,3 +1,4 @@
+@import '@/scss/vars.scss';
 .filter {
   max-width: 100%;
   background-color: rgb(255, 255, 255, 0.6);
@@ -5,8 +6,7 @@
   border-radius: 10px;
   padding: 1px 10px;
   text-align: center;
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
-
+  box-shadow: $shadow;
   & h2 {
     color: #413f3f;
   }
@@ -16,18 +16,23 @@
     justify-content: center;
   }
   & button {
-    background-color: #fff;
+    background-color: $color-white;
     padding: 5px 5px;
     margin: 0 5px;
     border-radius: 5px;
     font-size: 15px;
     min-height: 20px;
     margin-bottom: 10px;
-    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: $shadowBtn;
 
     &.active {
-      background-color: rgb(146, 113, 254);
-      color: #fff;
+      background: rgb(190, 5, 164);
+      background: linear-gradient(
+        90deg,
+        rgba(190, 5, 164, 1) 1%,
+        rgba(63, 65, 181, 1) 89%
+      );
+      color: $color-white;
       cursor: no-drop;
     }
     & img {

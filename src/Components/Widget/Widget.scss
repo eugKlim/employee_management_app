@@ -1,14 +1,14 @@
-@import '../../scss/vars.scss';
+@import '@/scss/vars.scss';
 .widget {
   display: flex;
   justify-content: center;
   &-inner {
     box-shadow: $shadow;
-    background-color: #fff;
+    background-color: $color-white;
     border-radius: 30px;
     display: inline-block;
     overflow: hidden;
-    border: 5px solid #fff;
+    border: 5px solid $color-white;
     min-width: 100%;
   }
   &-item {

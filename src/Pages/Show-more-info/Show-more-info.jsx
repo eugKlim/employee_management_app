@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Show-more-info.scss';
 import { StatusContext } from '@/Components/Status-Panel/StatusContext';
 import StatusPanel from '@/Components/Status-Panel/Status-Panel';
-import usePanelStatus from '../../hooks/usePanelStatus';
+import usePanelStatus from '@/hooks/usePanelStatus';
 
 const ShowMoreInfo = () => {
   const { id } = useParams();

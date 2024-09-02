@@ -1,3 +1,4 @@
+@import '@/scss/vars.scss';
 .status-panel {
   width: 100%;
   padding-bottom: 10px;
@@ -5,17 +6,17 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.55);
-  color: #fff;
+  box-shadow: $shadowPanel;
+  color: $color-white;
   user-select: none;
   overflow: auto;
   z-index: 999;
 
   &__close {
-    color: red;
+    color: $color-red;
     height: 30px;
     width: 30px;
-    background-color: #eeeeee;
+    background-color: $color-lightWhite;
     display: inline-block;
     border-radius: 0 20px 20px 0;
     cursor: pointer;
@@ -29,8 +30,8 @@
     transition: 0.1s linear;
     position: fixed;
     &:hover {
-      color: rgb(113, 3, 3);
-      background-color: #ff0000;
+      color: $color-darkRed;
+      background-color: $color-lightRed;
       transform: scale(1.09);
     }
   }
@@ -46,7 +47,7 @@
       flex-direction: column;
       text-align: center;
       padding: 10px 10px 0;
-      background: rgb(84, 2, 37);
+      background: $color-darkRed;
       color: #fff;
       font-size: 10px;
       text-transform: uppercase;
@@ -81,10 +82,10 @@
   &__status {
     padding: 5px 0;
     &.has {
-      color: green;
+      color: $color-green;
     }
     &.delete {
-      color: red;
+      color: $color-red;
     }
   }
   &__name {

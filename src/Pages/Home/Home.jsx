@@ -3,8 +3,7 @@ import Widget from '@/Components/Widget/Widget-list';
 import EmployeeList from '@/Components/Employee-list/Employee-list';
 import Filter from '@/Components/Filter/Filter-list';
 import Search from '@/Components/Search/Search';
-
-import { StatusContext } from '../../Components/Status-Panel/StatusContext';
+import { StatusContext } from '@/Components/Status-Panel/StatusContext';
 
 const Home = () => {
   const { userStatuses } = useContext(StatusContext);

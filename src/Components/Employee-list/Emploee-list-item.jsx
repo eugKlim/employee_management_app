@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { StatusContext } from '../Status-Panel/StatusContext';
 import { useContext } from 'react';
 import StatusPanel from '../Status-Panel/Status-Panel';
-import usePanelStatus from '../../hooks/usePanelStatus';
+import usePanelStatus from '@/hooks/usePanelStatus';
 
 const EmploeeListItem = ({ name, image, id }) => {
   const { userStatuses } = useContext(StatusContext);
