@@ -1,13 +1,35 @@
 @import '@/scss/vars.scss';
-
 .search {
   background-color: $color-white;
   padding: 10px;
   border-radius: 10px;
   margin-top: 20px;
-  & input {
-    min-width: 100%;
+
+  input {
+    width: 100%;
     padding: 10px;
     font-size: 17px;
+    border: 2px solid $color-lightGrey;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s, padding-top 0.3s, padding-bottom 0.3s;
+
+    &::placeholder {
+      color: $color-grey;
+      transition: transform 0.3s ease, font-size 0.3s ease;
+      transform-origin: left top;
+    }
+
+    &:focus {
+      border-color: $color-green;
+      padding-top: 18px;
+      padding-bottom: 2px;
+
+      &::placeholder {
+        font-size: 14px;
+        transform: translateY(-20px);
+        color: $color-green;
+      }
+    }
   }
 }

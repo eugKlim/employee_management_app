@@ -13,6 +13,7 @@ const Search = () => {
         placeholder="Поиск сотрудника"
         value={search}
         onChange={(e) => dispatch(searchUser(e.target.value))}
+        required
       />
     </div>
   );
