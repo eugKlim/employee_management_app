@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
-import { StatusContext } from '../Status-Panel/StatusContext';
-import { useContext } from 'react';
 import StatusPanel from '../Status-Panel/Status-Panel';
-import usePanelStatus from '@/hooks/usePanelStatus';
+import { openPanel } from '../Status-Panel/Status-Slice';
+import { useSelector, useDispatch } from 'react-redux';
 
 const EmploeeListItem = ({ name, image, id }) => {
-  const { userStatuses } = useContext(StatusContext);
-  const { isStatusPaneOpen, openPanel, closePanel } = usePanelStatus();
+  const { userStatuses, isOpenStatusPanel, selectedUserId } = useSelector(
+    (state) => state.statusSlice
+  );
+  const dispatch = useDispatch();
+
   return (
     <>
       <li className="employee-list__item">
@@ -28,7 +30,7 @@ const EmploeeListItem = ({ name, image, id }) => {
           </div>
           <button
             className="employee-list__actions"
-            onClick={() => openPanel()}
+            onClick={() => dispatch(openPanel(id))}
           >
             <span>...</span>
           </button>
@@ -45,8 +47,8 @@ const EmploeeListItem = ({ name, image, id }) => {
             )}
           </div>
 
-          {isStatusPaneOpen ? (
-            <StatusPanel name={name} id={id} closePanel={closePanel} />
+          {isOpenStatusPanel && selectedUserId === id ? (
+            <StatusPanel name={name} id={id} />
           ) : null}
         </div>
       </li>

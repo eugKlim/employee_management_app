@@ -1,15 +1,43 @@
-import { useContext, useEffect, useState } from 'react';
-import './Filter-list.scss';
+import { useEffect, useState } from 'react';
 import FilterItem from './Filter-item';
-import { SearchContext } from '../Search/Search-Context';
+import { useSelector } from 'react-redux';
+import './Filter-list.scss';
 
-const FilterList = ({ dataFilterBtn }) => {
+const dataFilterBtn = [
+  {
+    name: 'Все',
+    icon: 'Icons/people.svg',
+    statuses: 'all-people',
+  },
+  {
+    name: 'В отпуске',
+    icon: 'Icons/vacation.svg',
+    statuses: 'vacation',
+  },
+  {
+    name: 'Идут на повышение',
+    icon: 'Icons/promotion.svg',
+    statuses: 'promotion',
+  },
+  {
+    name: 'На больничном',
+    icon: 'Icons/hospital.svg',
+    statuses: 'hospital',
+  },
+  {
+    name: 'Премию получат',
+    icon: 'Icons/increase.svg',
+    statuses: 'increase',
+  },
+];
+
+const FilterList = () => {
   const [activeBtnFilter, setActiveBtnFilter] = useState(0);
-  const { searchPeople } = useContext(SearchContext);
+  const { search } = useSelector((state) => state.employee);
 
   useEffect(() => {
     setActiveBtnFilter(0);
-  }, [searchPeople]);
+  }, [search]);
 
   const giveFilterBtnActive = (index) => {
     setActiveBtnFilter(index);

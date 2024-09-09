@@ -1,16 +1,18 @@
-import { useContext } from 'react';
 import './Search.scss';
-import { SearchContext } from './Search-Context';
+import { useSelector, useDispatch } from 'react-redux';
+import { searchUser } from '../Employee-list/Employee-Slice';
 
 const Search = () => {
-  const { searchChange } = useContext(SearchContext);
+  const { search } = useSelector((state) => state.employee);
+  const dispatch = useDispatch();
 
   return (
     <div className="search">
       <input
         type="text"
         placeholder="Поиск сотрудника"
-        onChange={searchChange}
+        value={search}
+        onChange={(e) => dispatch(searchUser(e.target.value))}
       />
     </div>
   );

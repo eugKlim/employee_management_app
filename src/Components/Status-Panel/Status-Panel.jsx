@@ -1,21 +1,31 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Status-Panel.scss';
-import { StatusContext } from '../Status-Panel/StatusContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleUserStatus } from './Status-Slice';
 
 import hospitalImg from '/Icons/hospital.svg';
 import promotionImg from '/Icons/promotion.svg';
 import increaseImg from '/Icons/increase.svg';
 import vacationImg from '/Icons/vacation.svg';
 
-const StatusPanel = ({ name, closePanel, id }) => {
-  const { toggleUserStatus, userStatuses } = useContext(StatusContext);
+import { closePanel } from '../Status-Panel/Status-Slice';
 
+const StatusPanel = ({ name, id }) => {
+  const ref = useRef();
+  const dispatch = useDispatch();
+  const { userStatuses } = useSelector((state) => state.statusSlice);
+
+  const handleToggleStatus = (userId, icon) => {
+    dispatch(toggleUserStatus({ userId, icon }));
+  };
+
+  // для кнопок на статус панели.
   const [orPromotion, setOrPromotion] = useState('');
   const [orIncrease, setOrIncrease] = useState('');
   const [orHospital, setOrHospital] = useState('');
   const [orVacation, setOrVacation] = useState('');
 
-  function getCountStatus(name, setstate, id) {
+  function getStatusBtn(name, setstate, id) {
     const [searchState, setSearchState] = useState(0);
 
     useEffect(() => {
@@ -29,7 +39,7 @@ const StatusPanel = ({ name, closePanel, id }) => {
         }
       }
       localStorage.setItem('userStatus', JSON.stringify(userStatuses));
-    }, [getCountStatus]);
+    }, [getStatusBtn]);
 
     useEffect(() => {
       setstate(
@@ -42,38 +52,9 @@ const StatusPanel = ({ name, closePanel, id }) => {
     }, [searchState]);
   }
 
-  const iconList = [
-    {
-      src: promotionImg,
-      alt: 'ИДЁТ НА ПОВЫШЕНИЕ',
-      btnState: orPromotion,
-      callFunc: getCountStatus('promotion', setOrPromotion, id),
-    },
-    {
-      src: hospitalImg,
-      alt: 'НА БОЛЬНИЧНОМ',
-      btnState: orHospital,
-      callFunc: getCountStatus('hospital', setOrHospital, id),
-    },
-    {
-      src: increaseImg,
-      alt: 'ПРЕМИЮ ПОЛУЧИТ',
-      btnState: orIncrease,
-      callFunc: getCountStatus('increase', setOrIncrease, id),
-    },
-    {
-      src: vacationImg,
-      alt: 'В ОТПУСКЕ',
-      btnState: orVacation,
-      callFunc: getCountStatus('vacation', setOrVacation, id),
-    },
-  ];
-
-  const ref = useRef();
-
   const handleClickOutside = (e) => {
     if (ref.current && !ref.current.contains(e.target)) {
-      closePanel();
+      dispatch(closePanel());
     }
   };
   useEffect(() => {
@@ -83,6 +64,34 @@ const StatusPanel = ({ name, closePanel, id }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+  // /
+  
+  const iconList = [
+    {
+      src: promotionImg,
+      alt: 'ИДЁТ НА ПОВЫШЕНИЕ',
+      btnState: orPromotion,
+      addStatusBtn: getStatusBtn('promotion', setOrPromotion, id),
+    },
+    {
+      src: hospitalImg,
+      alt: 'НА БОЛЬНИЧНОМ',
+      btnState: orHospital,
+      addStatusBtn: getStatusBtn('hospital', setOrHospital, id),
+    },
+    {
+      src: increaseImg,
+      alt: 'ПРЕМИЮ ПОЛУЧИТ',
+      btnState: orIncrease,
+      addStatusBtn: getStatusBtn('increase', setOrIncrease, id),
+    },
+    {
+      src: vacationImg,
+      alt: 'В ОТПУСКЕ',
+      btnState: orVacation,
+      addStatusBtn: getStatusBtn('vacation', setOrVacation, id),
+    },
+  ];
 
   return (
     <div className="status-panel" ref={ref}>
@@ -97,7 +106,7 @@ const StatusPanel = ({ name, closePanel, id }) => {
           <div className="status-panel__btn" key={item.alt}>
             <button
               data-btn={item.src}
-              onClick={() => toggleUserStatus(id, item.src)}
+              onClick={() => handleToggleStatus(id, item.src)}
             >
               <img src={item.src} alt={item.alt} />
               <h2>{item.alt}</h2>

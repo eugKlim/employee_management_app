@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
-import './Show-more-info.scss';
-import { StatusContext } from '@/Components/Status-Panel/StatusContext';
 import StatusPanel from '@/Components/Status-Panel/Status-Panel';
-import usePanelStatus from '@/hooks/usePanelStatus';
+import { openPanel, closePanel } from '@/Components/Status-Panel/Status-Slice';
+import { useSelector, useDispatch } from 'react-redux';
+import './Show-more-info.scss';
 
 const ShowMoreInfo = () => {
   const { id } = useParams();
@@ -13,8 +13,11 @@ const ShowMoreInfo = () => {
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const { userStatuses } = useContext(StatusContext);
-  const { isStatusPaneOpen, openPanel, closePanel } = usePanelStatus();
+
+  const { userStatuses, isOpenStatusPanel, selectedUserId } = useSelector(
+    (state) => state.statusSlice
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getUsersFunc = async () => {
@@ -90,11 +93,11 @@ const ShowMoreInfo = () => {
               </div>
               <button
                 className="showMoreInfo-status__btn"
-                onClick={() => openPanel()}
+                onClick={() => dispatch(openPanel(id))}
               >
                 Редактировать статус ⚙
               </button>
-              {isStatusPaneOpen ? (
+              {isOpenStatusPanel && selectedUserId === id ? (
                 <StatusPanel name={user.name} id={id} closePanel={closePanel} />
               ) : null}
             </div>

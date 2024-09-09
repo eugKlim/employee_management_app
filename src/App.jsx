@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -5,10 +6,11 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-// get info from localhost
-import { useContext, useEffect } from 'react';
-import { StatusContext } from './Components/Status-Panel/StatusContext';
-// /
+import { useDispatch } from 'react-redux';
+import {
+  getUserStatusFromLocalStorage,
+  setUserStatuses,
+} from './Components/Status-Panel/Status-Slice';
 
 // pages
 import Home from './Pages/Home/Home';
@@ -17,11 +19,13 @@ import NotFound from './Pages/NotFound/NotFound';
 // /
 
 const App = () => {
-  // get info from localhost
-  const { userStatusFromLocalStorgae } = useContext(StatusContext);
+  const dispatch = useDispatch();
+
+  // get info from localstorage
   useEffect(() => {
-    userStatusFromLocalStorgae();
-  }, []);
+    const userStatuses = getUserStatusFromLocalStorage();
+    dispatch(setUserStatuses(userStatuses));
+  }, [dispatch]);
   // /
 
   return (

@@ -1,6 +1,5 @@
-import { useContext } from 'react';
-import { StatusContext } from '../Status-Panel/StatusContext';
-import { SearchContext } from '../Search/Search-Context';
+import { useSelector, useDispatch } from 'react-redux';
+import { filterBtns } from '../Employee-list/Employee-Slice';
 
 const FilterItem = ({
   name,
@@ -10,8 +9,9 @@ const FilterItem = ({
   index,
   giveFilterBtnActive,
 }) => {
-  const { users } = useContext(SearchContext);
-  const { userStatuses, setFilteredUsers } = useContext(StatusContext);
+  const { users } = useSelector((state) => state.employee);
+  const dispatch = useDispatch();
+  const { userStatuses } = useSelector((state) => state.statusSlice);
 
   const filter = (e) => {
     const getDataAtt = e.currentTarget.dataset.status;
@@ -19,13 +19,12 @@ const FilterItem = ({
       const filterStatuses = Object.entries(userStatuses).filter(
         ([key, value]) => value.some((value) => value.includes(getDataAtt))
       );
-
       const filterUserId = users.filter((user) =>
         filterStatuses.some((idArray) => idArray.includes(String(user.id)))
       );
-      setFilteredUsers(filterUserId);
+      dispatch(filterBtns(filterUserId));
     } else {
-      setFilteredUsers(users);
+      dispatch(filterBtns(users));
     }
 
     giveFilterBtnActive(index);
