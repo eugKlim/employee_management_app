@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import EmployeeReducer from './Employee-list/Employee-Slice';
+import EmployeeReducer from './Employee-list/Employee-Slice.tsx';
 import StatusReducer from './Status-Panel/Status-Slice';
 
 const Store = configureStore({
@@ -10,4 +10,6 @@ const Store = configureStore({
   },
 });
 
+export type RootState = ReturnType<typeof Store.getState>;
+export type AppDispatch = typeof Store.dispatch;    
 export default Store;

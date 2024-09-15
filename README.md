@@ -2,8 +2,9 @@
 
 **На чем написано:**
 - React
-- Запросы на сервер: axios
+- TypeScript
 - Redux toolkit
+- Запросы на сервер: axios
 - Scss
 - Компилятор Vite
 

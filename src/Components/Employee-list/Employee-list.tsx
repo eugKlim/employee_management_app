@@ -1,14 +1,18 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import './Employee-list.scss';
 import EmploeeListItem from './Employee-list-item';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUsersAndImages } from './Employee-Slice';
+import { RootState, AppDispatch } from '../Store';
 
 const EmployeeList = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const { status, filtredUsers } = useSelector((state) => state.employee);
+  const { status, filtredUsers } = useSelector(
+    (state: RootState) => state.employee
+  );
 
   useEffect(() => {
     if (status === 'idle') dispatch(getUsersAndImages());
@@ -26,7 +30,7 @@ const EmployeeList = () => {
               <EmploeeListItem
                 name={item.name}
                 image={item.image}
-                id={item.id}
+                id={item.id.toString()}
                 key={item.id}
               />
             ))

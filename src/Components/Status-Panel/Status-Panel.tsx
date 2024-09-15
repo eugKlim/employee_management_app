@@ -1,32 +1,44 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, FC } from 'react';
 import './Status-Panel.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleUserStatus } from './Status-Slice';
+import { toggleUserStatus, closePanel } from './Status-Slice';
 
 import hospitalImg from '/Icons/hospital.svg';
 import promotionImg from '/Icons/promotion.svg';
 import increaseImg from '/Icons/increase.svg';
 import vacationImg from '/Icons/vacation.svg';
 
-import { closePanel } from '../Status-Panel/Status-Slice';
+interface StatusPanelProps {
+  name: string;
+  id: string | number;
+}
 
-const StatusPanel = ({ name, id }) => {
-  const ref = useRef();
+interface RootState {
+  statusSlice: {
+    userStatuses: Record<string, string[]>;
+  };
+}
+
+const StatusPanel: FC<StatusPanelProps> = ({ name, id }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
-  const { userStatuses } = useSelector((state) => state.statusSlice);
+  const { userStatuses } = useSelector((state: RootState) => state.statusSlice);
 
-  const handleToggleStatus = (userId, icon) => {
+  const handleToggleStatus = (userId: string, icon: string) => {
     dispatch(toggleUserStatus({ userId, icon }));
   };
 
-  // для кнопок на статус панели.
-  const [orPromotion, setOrPromotion] = useState('');
-  const [orIncrease, setOrIncrease] = useState('');
-  const [orHospital, setOrHospital] = useState('');
-  const [orVacation, setOrVacation] = useState('');
+  const [orPromotion, setOrPromotion] = useState<JSX.Element | string>('');
+  const [orIncrease, setOrIncrease] = useState<JSX.Element | string>('');
+  const [orHospital, setOrHospital] = useState<JSX.Element | string>('');
+  const [orVacation, setOrVacation] = useState<JSX.Element | string>('');
 
-  function getStatusBtn(name, setstate, id) {
-    const [searchState, setSearchState] = useState(0);
+  function getStatusBtn(
+    name: string,
+    setState: React.Dispatch<React.SetStateAction<JSX.Element | string>>,
+    id: string | number
+  ) {
+    const [searchState, setSearchState] = useState<number>(0);
 
     useEffect(() => {
       if (Object.keys(userStatuses).length !== 0) {
@@ -39,24 +51,25 @@ const StatusPanel = ({ name, id }) => {
         }
       }
       localStorage.setItem('userStatus', JSON.stringify(userStatuses));
-    }, [getStatusBtn]);
+    }, [userStatuses, id, name]);
 
     useEffect(() => {
-      setstate(
+      setState(
         searchState !== 0 ? (
           <div className="status-panel__status delete">Удалить</div>
         ) : (
           <div className="status-panel__status has">Добавить</div>
         )
       );
-    }, [searchState]);
+    }, [searchState, setState]);
   }
 
-  const handleClickOutside = (e) => {
-    if (ref.current && !ref.current.contains(e.target)) {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
       dispatch(closePanel());
     }
   };
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
 
@@ -64,8 +77,7 @@ const StatusPanel = ({ name, id }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-  // /
-  
+
   const iconList = [
     {
       src: promotionImg,
@@ -98,7 +110,10 @@ const StatusPanel = ({ name, id }) => {
       <div className="status-panel__name">
         <b>Редактировать статусы</b>: {name}
       </div>
-      <div className="status-panel__close" onClick={() => closePanel()}>
+      <div
+        className="status-panel__close"
+        onClick={() => dispatch(closePanel())}
+      >
         &#10006;
       </div>
       <div className="status-panel__btns">
@@ -106,7 +121,7 @@ const StatusPanel = ({ name, id }) => {
           <div className="status-panel__btn" key={item.alt}>
             <button
               data-btn={item.src}
-              onClick={() => handleToggleStatus(id, item.src)}
+              onClick={() => handleToggleStatus(id.toString(), item.src)}
             >
               <img src={item.src} alt={item.alt} />
               <h2>{item.alt}</h2>

@@ -1,7 +1,18 @@
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { filterBtns } from '../Employee-list/Employee-Slice';
+import { RootState, AppDispatch } from '../Store';
 
-const FilterItem = ({
+interface IFilterItem {
+  name: string;
+  icon: string;
+  statuses: string;
+  active: boolean;
+  index: number;
+  giveFilterBtnActive: (index: number) => void;
+}
+
+const FilterItem: React.FC<IFilterItem> = ({
   name,
   icon,
   statuses,
@@ -9,15 +20,16 @@ const FilterItem = ({
   index,
   giveFilterBtnActive,
 }) => {
-  const { users } = useSelector((state) => state.employee);
-  const dispatch = useDispatch();
-  const { userStatuses } = useSelector((state) => state.statusSlice);
+  const { users } = useSelector((state: RootState) => state.employee);
+  const dispatch = useDispatch<AppDispatch>();
+  const { userStatuses } = useSelector((state: RootState) => state.statusSlice);
 
-  const filter = (e) => {
+  const filter = (e: React.MouseEvent<HTMLButtonElement>) => {
     const getDataAtt = e.currentTarget.dataset.status;
     if (getDataAtt !== 'all-people') {
       const filterStatuses = Object.entries(userStatuses).filter(
-        ([key, value]) => value.some((value) => value.includes(getDataAtt))
+        ([key, value]) =>
+          (value as string[]).some((value) => value.includes(getDataAtt!))
       );
       const filterUserId = users.filter((user) =>
         filterStatuses.some((idArray) => idArray.includes(String(user.id)))

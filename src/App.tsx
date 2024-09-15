@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect } from 'react';
 import {
   BrowserRouter as Router,
@@ -11,6 +12,7 @@ import {
   getUserStatusFromLocalStorage,
   setUserStatuses,
 } from './Components/Status-Panel/Status-Slice';
+import { AppDispatch } from './Components/Store';
 
 // pages
 import Home from './Pages/Home/Home';
@@ -18,8 +20,8 @@ import ShowMoreInfo from './Pages/Show-more-info/Show-more-info';
 import NotFound from './Pages/NotFound/NotFound';
 // /
 
-const App = () => {
-  const dispatch = useDispatch();
+const App: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
 
   // get info from localstorage
   useEffect(() => {

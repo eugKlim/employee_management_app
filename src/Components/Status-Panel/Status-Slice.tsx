@@ -1,13 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export const getUserStatusFromLocalStorage = () => {
-  let getStatusIcons = JSON.parse(localStorage.getItem('userStatus'));
+interface IUserStatuses {
+  [userId: string]: string[];
+}
+interface IStatusState {
+  toggleUserStatus: IUserStatuses;
+  userStatuses: IUserStatuses;
+  isOpenStatusPanel: boolean;
+  selectedUserId: string | null;
+}
+
+export const getUserStatusFromLocalStorage = (): IUserStatuses => {
+  let getStatusIcons = JSON.parse(localStorage.getItem('userStatus')!);
   if (
     getStatusIcons !== null &&
     getStatusIcons !== undefined &&
     Object.keys(getStatusIcons).length !== 0
   ) {
-    return JSON.parse(localStorage.getItem('userStatus'));
+    return getStatusIcons as IUserStatuses;
   }
   return {};
 };
@@ -19,20 +29,23 @@ const StatusSlice = createSlice({
     userStatuses: {},
     isOpenStatusPanel: false,
     selectedUserId: null,
-  },
+  } as IStatusState,
   reducers: {
-    setUserStatuses: (state, action) => {
+    setUserStatuses: (state, action: PayloadAction<IUserStatuses>) => {
       state.userStatuses = action.payload;
     },
-    toggleUserStatus: (state, action) => {
+    toggleUserStatus: (
+      state,
+      action: PayloadAction<{ userId: string; icon: string }>
+    ) => {
       const { userId, icon } = action.payload;
       const userIcons = state.userStatuses[userId] || [];
       const newIcons = userIcons.includes(icon)
-        ? userIcons.filter((i) => i !== icon)
+        ? userIcons.filter((i: string) => i !== icon)
         : [...userIcons, icon];
       state.userStatuses[userId] = newIcons;
     },
-    openPanel: (state, action) => {
+    openPanel: (state, action: PayloadAction<string>) => {
       state.isOpenStatusPanel = true;
       state.selectedUserId = action.payload;
     },

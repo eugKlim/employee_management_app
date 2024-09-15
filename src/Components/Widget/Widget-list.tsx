@@ -1,12 +1,13 @@
 import WidgetItems from './Widget-items';
 import { useSelector } from 'react-redux';
 import './Widget.scss';
+import { RootState } from '../Store';
 
 const Widget = () => {
-  const { users } = useSelector((status) => status.employee);
-  const { userStatuses } = useSelector((state) => state.statusSlice);
+  const { users } = useSelector((status: RootState) => status.employee);
+  const { userStatuses } = useSelector((state: RootState) => state.statusSlice);
 
-  function getCountStatus(name) {
+  function getCountStatus(name: string) {
     return Object.values(userStatuses)
       .flat()
       .filter((item) => item === `/employee_management_app/Icons/${name}`)

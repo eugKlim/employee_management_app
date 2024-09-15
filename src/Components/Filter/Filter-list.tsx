@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import FilterItem from './Filter-item';
 import { useSelector } from 'react-redux';
 import './Filter-list.scss';
+import { RootState } from '../Store';
 
 const dataFilterBtn = [
   {
@@ -32,14 +33,14 @@ const dataFilterBtn = [
 ];
 
 const FilterList = () => {
-  const [activeBtnFilter, setActiveBtnFilter] = useState(0);
-  const { search } = useSelector((state) => state.employee);
+  const [activeBtnFilter, setActiveBtnFilter] = useState<number>(0);
+  const { search } = useSelector((state: RootState) => state.employee);
 
   useEffect(() => {
     setActiveBtnFilter(0);
   }, [search]);
 
-  const giveFilterBtnActive = (index) => {
+  const giveFilterBtnActive = (index: number) => {
     setActiveBtnFilter(index);
   };
 

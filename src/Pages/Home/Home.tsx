@@ -1,9 +1,9 @@
-import Widget from '@/Components/Widget/Widget-list';
-import EmployeeList from '@/Components/Employee-list/Employee-list';
-import Filter from '@/Components/Filter/Filter-list';
-import Search from '@/Components/Search/Search';
+import Widget from '../../Components/Widget/Widget-list';
+import EmployeeList from '../../Components/Employee-list/Employee-list';
+import Filter from '../../Components/Filter/Filter-list';
+import Search from '../../Components/Search/Search';
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
     <div className="container">
       <aside className="sidebar">

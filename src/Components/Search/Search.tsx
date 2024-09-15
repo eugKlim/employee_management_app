@@ -1,10 +1,11 @@
 import './Search.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { searchUser } from '../Employee-list/Employee-Slice';
+import { RootState, AppDispatch } from '../Store';
 
 const Search = () => {
-  const { search } = useSelector((state) => state.employee);
-  const dispatch = useDispatch();
+  const { search } = useSelector((state: RootState) => state.employee);
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <div className="search">

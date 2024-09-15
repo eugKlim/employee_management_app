@@ -1,13 +1,21 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import StatusPanel from '../Status-Panel/Status-Panel';
 import { openPanel } from '../Status-Panel/Status-Slice';
 import { useSelector, useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '../Store';
 
-const EmploeeListItem = ({ name, image, id }) => {
+interface IEmployeeItem {
+  name: string;
+  image: string;
+  id: string;
+}
+
+const EmploeeListItem: React.FC<IEmployeeItem> = ({ name, image, id }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const { userStatuses, isOpenStatusPanel, selectedUserId } = useSelector(
-    (state) => state.statusSlice
+    (state: RootState) => state.statusSlice
   );
-  const dispatch = useDispatch();
 
   return (
     <>
@@ -39,7 +47,7 @@ const EmploeeListItem = ({ name, image, id }) => {
           <h2>Статус сотрудника:</h2>
           <div className="employee-status__icons">
             {userStatuses[id]?.length ? (
-              userStatuses[id]?.map((icon, index) => (
+              userStatuses[id]?.map((icon: string, index: number) => (
                 <img key={index} src={icon} alt="user status" />
               ))
             ) : (

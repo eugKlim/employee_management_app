@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import './NotFound.scss';
 
@@ -6,7 +5,7 @@ const NotFound = () => {
   return (
     <div className="notFound">
       <h2>
-        ОШИБКА <span>404</span>{' '}
+        ОШИБКА <span>404</span>
       </h2>
       <h3>Страница не найдена!</h3>
       <Link to={'/home'}>
