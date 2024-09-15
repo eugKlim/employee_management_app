@@ -4,6 +4,8 @@ import StatusPanel from '../Status-Panel/Status-Panel';
 import { openPanel } from '../Status-Panel/Status-Slice';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../Store';
+import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
 
 interface IEmployeeItem {
   name: string;
@@ -17,9 +19,20 @@ const EmploeeListItem: React.FC<IEmployeeItem> = ({ name, image, id }) => {
     (state: RootState) => state.statusSlice
   );
 
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   return (
     <>
-      <li className="employee-list__item">
+      <motion.li
+        className="employee-list__item"
+        ref={ref}
+        initial={{ opacity: 0, x: -200 }}
+        animate={inView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 0.6 }}
+      >
         <div className="employee-list__item-inner">
           <div className="employee-list__item-user">
             <div className="employee-list__item-img">
@@ -59,7 +72,7 @@ const EmploeeListItem: React.FC<IEmployeeItem> = ({ name, image, id }) => {
             <StatusPanel name={name} id={id} />
           ) : null}
         </div>
-      </li>
+      </motion.li>
     </>
   );
 };

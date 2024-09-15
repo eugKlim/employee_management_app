@@ -108,7 +108,7 @@ const StatusPanel: FC<StatusPanelProps> = ({ name, id }) => {
   return (
     <div className="status-panel" ref={ref}>
       <div className="status-panel__name">
-        <b>Редактировать статусы</b>: {name}
+        <b>Редактировать статусы</b>: <span>{name}</span>
       </div>
       <div
         className="status-panel__close"

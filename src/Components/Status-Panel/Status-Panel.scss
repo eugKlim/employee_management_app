@@ -11,6 +11,7 @@
   user-select: none;
   overflow: auto;
   z-index: 999;
+  animation: goUp 0.3s ease;
 
   &__close {
     color: $color-red;
@@ -66,7 +67,7 @@
       }
       & img {
         margin: 0 auto 5px;
-        width: 35px;
+        max-width: 35px;
       }
     }
     &:hover button:not(:hover) {
@@ -80,6 +81,7 @@
     overflow: hidden;
     margin: 10px;
     background-color: rgb(26, 26, 26);
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.65);
   }
   &__status {
     padding: 5px 0;
@@ -93,5 +95,18 @@
   &__name {
     text-align: center;
     padding: 10px 30px 30px;
+    & span {
+      color: $color-red;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+@keyframes goUp {
+  from {
+    bottom: -30vh;
+  }
+  to {
+    bottom: 0;
   }
 }

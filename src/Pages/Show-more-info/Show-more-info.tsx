@@ -7,6 +7,8 @@ import { openPanel } from '../../Components/Status-Panel/Status-Slice';
 import { useSelector, useDispatch } from 'react-redux';
 import './Show-more-info.scss';
 import { RootState, AppDispatch } from '../../Components/Store';
+import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
 
 interface IUser {
   id: number;
@@ -67,6 +69,11 @@ const ShowMoreInfo = () => {
     getUsersFunc();
   }, [id, navigate]);
 
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   return (
     <div>
       {isLoading ? (
@@ -84,22 +91,29 @@ const ShowMoreInfo = () => {
               <img src={image?.thumbnailUrl} alt="Image" />
               <h2>{user?.name}</h2>
             </div>
-            <p>
-              <strong>Email:</strong> {user?.email}
-            </p>
-            <p>
-              <strong>Phone:</strong> {user?.phone}
-            </p>
-            <p>
-              <strong>Company:</strong> {user?.company.name}
-            </p>
-            <p>
-              <strong>Address:</strong> {user?.address.street},
-              {user?.address.city}
-            </p>
-            <p>
-              <strong>ZipCode:</strong> {user?.address.zipcode}
-            </p>
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, y: 50 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+            >
+              <p>
+                <strong>Email:</strong> {user?.email}
+              </p>
+              <p>
+                <strong>Phone:</strong> {user?.phone}
+              </p>
+              <p>
+                <strong>Company:</strong> {user?.company.name}
+              </p>
+              <p>
+                <strong>Address:</strong> {user?.address.street},
+                {user?.address.city}
+              </p>
+              <p>
+                <strong>ZipCode:</strong> {user?.address.zipcode}
+              </p>
+            </motion.div>
             <div className="showMoreInfo-status">
               <div className="employee-status">
                 <h2>Статус сотрудника:</h2>

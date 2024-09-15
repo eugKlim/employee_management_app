@@ -63,8 +63,18 @@ button {
   background-color: transparent;
   border: none;
   &:hover {
-    background-color: #210000;
     color: $color-white;
+    background: linear-gradient(
+      90deg,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(9, 9, 121, 1) 35%,
+      rgba(0, 212, 255, 1) 100%
+    );
+    & img {
+      transition: 0.4s linear;
+      background-color: #fff;
+      border-radius: 50%;
+    }
   }
 }
 
